@@ -8,7 +8,7 @@ import { useAuthStore } from "@/components/forms/store/authStore";
 import { loginSchema } from "@/components/forms/validation/ValidationSchema";
 import { z } from "zod";
 
-export default function LoginForm({ onClose, onSwitchToRegister }: { onClose: () => void, onSwitchToRegister: () => void }) {
+export default function LoginForm({ onClose, onSwitchToRegister }: { readonly onClose: () => void, readonly onSwitchToRegister: () => void }) {
   const login = useAuthStore((state) => state.login);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -23,6 +23,8 @@ export default function LoginForm({ onClose, onSwitchToRegister }: { onClose: ()
     } catch (error) {
       if (error instanceof z.ZodError) {
         setErrors(error.formErrors.fieldErrors);
+      } else {
+        alert("Authentication failed");
       }
     }
   };
@@ -48,9 +50,9 @@ export default function LoginForm({ onClose, onSwitchToRegister }: { onClose: ()
             </Button>
           </form>
           <div className="text-center text-sm text-gray-500 dark:text-gray-400">
-            you dont have an account?
+            Vous n avez pas de compte?
             <button className="font-medium underline underline-offset-2" onClick={() => { onClose(); onSwitchToRegister(); }}>
-              Please register
+              Inscrivez-vous
             </button>
           </div>
         </div>

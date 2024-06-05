@@ -2,6 +2,7 @@ import { create } from "zustand";
 
 interface AuthState {
   isAuthenticated: boolean;
+  username: string | null;
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
   register: (username: string, email: string, phone: string, password: string) => Promise<void>;
@@ -9,7 +10,7 @@ interface AuthState {
 
 export const useAuthStore = create<AuthState>((set) => ({
   isAuthenticated: false,
-  /*add endpoint here*/
+  username: null,
   login: async (email, password) => {
     const response = await fetch("/api/auth/login", {
       method: "POST",
@@ -20,12 +21,13 @@ export const useAuthStore = create<AuthState>((set) => ({
     });
 
     if (response.ok) {
-      set({ isAuthenticated: true });
+      const data = await response.json();
+      set({ isAuthenticated: true, username: data.username });
     } else {
       alert("Authentication failed");
     }
   },
-  logout: () => set({ isAuthenticated: false }),
+  logout: () => set({ isAuthenticated: false, username: null }),
   register: async (username, email, phone, password) => {
     const response = await fetch("/api/auth/register", {
       method: "POST",
@@ -37,6 +39,7 @@ export const useAuthStore = create<AuthState>((set) => ({
 
     if (response.ok) {
       alert("Registration successful");
+      set({ isAuthenticated: true, username });
     } else {
       alert("Registration failed");
     }

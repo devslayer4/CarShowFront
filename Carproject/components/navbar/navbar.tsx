@@ -1,6 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import LoginForm from "@/components/forms/LoginForm";
+import RegisterForm from "@/components/forms/RegisterForm";
+import { useAuthStore } from "@/components/forms/store/authStore";
 import CarIcon from "@/components/icons/CarIcon";
 import HomeIcon from "@/components/icons/HomeIcon";
 import InfoIcon from "@/components/icons/InfoIcon";
@@ -11,9 +13,7 @@ import UserIcon from "@/components/icons/UserIcon";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import Link from "next/link";
-import LoginForm from "@/components/forms/LoginForm";
-import RegisterForm from "@/components/forms/RegisterForm";
-import { useAuthStore } from "@/components/forms/store/authStore";
+import { useState } from "react";
 
 export default function Navbar() {
   const [showLoginForm, setShowLoginForm] = useState(false);
@@ -52,7 +52,7 @@ export default function Navbar() {
             </Button>
           </SheetTrigger>
           <SheetContent side="right">
-          <div className="grid gap-2 py-6">
+            <div className="grid gap-2 py-6">
               <Link href="/" className="flex w-full items-center py-2 text-lg font-semibold" prefetch={false}>
                 <HomeIcon className="mr-2 h-5 w-5" />
                 Accueil
@@ -72,15 +72,19 @@ export default function Navbar() {
             </div>
           </SheetContent>
         </Sheet>
-        <Button
-          variant="ghost"
-          size="icon"
-          className={`rounded-full ${isAuthenticated ? "bg-black text-white" : ""}`}
-          onClick={toggleLoginForm}
-        >
-          <UserIcon className="h-6 w-6" />
-          <span className="sr-only">Connexion</span>
-        </Button>
+        {isAuthenticated ? (
+          <UserIcon className="h-6 w-6 cursor-pointer" />
+        ) : (
+          <Button
+            variant="ghost"
+            size="icon"
+            className="rounded-full"
+            onClick={toggleLoginForm}
+          >
+            <UserIcon className="h-6 w-6" />
+            <span className="sr-only">Connexion</span>
+          </Button>
+        )}
         <Button variant="ghost" size="icon" className="rounded-full">
           <ShoppingCartIcon className="h-6 w-6" />
           <span className="sr-only">Panier</span>
