@@ -1,24 +1,14 @@
 "use client";
 
-import { useAppointmentStore } from "@/components/forms/store/useAppointmentStore";
+import { useState } from "react";
 import { CardTitle, CardDescription, CardHeader, Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { AppointmentForm } from "@/components/appoinment/AppointmentForm";
-
-type Car = {
-  id: number;
-  name: string;
-  price: string;
-  type: string;
-  seats: number;
-  imageUrl: string;
-};
-
 import Image from 'next/image';
 
 export function AllCars() {
-  const { showForm, setShowForm, setSelectedCar } = useAppointmentStore();
+  const [showForm, setShowForm] = useState(false);
 
   const cars = [
     { id: 1, name: "Toyota Corolla", price: "$209.00", type: "Economy", seats: 5, imageUrl: "/placeholder.svg" },
@@ -28,9 +18,15 @@ export function AllCars() {
     { id: 5, name: "Chevy Camaro", price: "$209.00", type: "Sports", seats: 4, imageUrl: "/placeholder.svg" },
     { id: 6, name: "Toyota Supra", price: "$210.00", type: "Sports", seats: 2, imageUrl: "/placeholder.svg" },
   ];
-
+  type Car = {
+    id: number;
+    name: string;
+    price: string;
+    type: string;
+    seats: number;
+    imageUrl: string;
+  };
   const handleInterestedClick = (car: Car) => {
-    setSelectedCar(car);
     setShowForm(true);
   };
 

@@ -6,6 +6,12 @@ import { Check } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
+interface CheckboxProps {
+  id: string;
+  checked: boolean;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
 const Checkbox = React.forwardRef<
   React.ElementRef<typeof CheckboxPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root>
