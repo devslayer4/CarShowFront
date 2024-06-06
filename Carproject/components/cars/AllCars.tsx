@@ -1,15 +1,24 @@
 "use client";
 
-import { useState } from "react";
+import { useAppointmentStore } from "@/components/forms/store/useAppointmentStore";
 import { CardTitle, CardDescription, CardHeader, Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { AppointmentForm } from "@/components/appoinment/AppointmentForm";
 
+type Car = {
+  id: number;
+  name: string;
+  price: string;
+  type: string;
+  seats: number;
+  imageUrl: string;
+};
+
+import Image from 'next/image';
+
 export function AllCars() {
-  const [showForm, setShowForm] = useState(false);
-  const [selectedCar, setSelectedCar] = useState<Car | null>(null);
-  
+  const { showForm, setShowForm, setSelectedCar } = useAppointmentStore();
 
   const cars = [
     { id: 1, name: "Toyota Corolla", price: "$209.00", type: "Economy", seats: 5, imageUrl: "/placeholder.svg" },
@@ -19,14 +28,7 @@ export function AllCars() {
     { id: 5, name: "Chevy Camaro", price: "$209.00", type: "Sports", seats: 4, imageUrl: "/placeholder.svg" },
     { id: 6, name: "Toyota Supra", price: "$210.00", type: "Sports", seats: 2, imageUrl: "/placeholder.svg" },
   ];
-  type Car = {
-    id: number;
-    name: string;
-    price: string;
-    type: string;
-    seats: number;
-    imageUrl: string;
-  };
+
   const handleInterestedClick = (car: Car) => {
     setSelectedCar(car);
     setShowForm(true);
@@ -36,16 +38,12 @@ export function AllCars() {
     <main className="flex-1 p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
       {cars.map((car) => (
         <Card key={car.id} className="w-full">
-          <img
+          <Image
             alt={car.name}
             className="w-full h-[200px] object-cover"
-            height="200"
+            height={200}
             src={car.imageUrl}
-            style={{
-              aspectRatio: "350/200",
-              objectFit: "cover",
-            }}
-            width="350"
+            width={350}
           />
           <CardHeader>
             <CardTitle>{car.name}</CardTitle>

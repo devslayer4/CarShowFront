@@ -15,3 +15,16 @@ export const registerSchema = z.object({
   message: "Passwords don't match",
   path: ["confirmPassword"],
 });
+
+export const appointmentSchema = z.object({
+  carId: z.string().min(1, "Car ID is required"),
+  name: z.string().min(1, { message: "Name is required" }),
+  firstName: z.string().min(1, { message: "First Name is required" }),
+  email: z.string().email("Invalid email address").min(1, { message: "Email is required" }),
+  message: z.string().min(1, { message: "Message is required" }),
+  contact: z.string().min(1, "Contact is required"),
+  appointmentDate: z.string().min(1, "Appointment Date is required"),
+  status: z.enum(["pending", "confirmed", "cancelled"]).refine((val) => ["pending", "confirmed", "cancelled"].includes(val), {
+    message: "Status is required",
+  }),
+});
