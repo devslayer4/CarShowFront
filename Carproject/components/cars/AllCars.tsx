@@ -1,8 +1,16 @@
+"use client";
+
+import { useState } from "react";
 import { CardTitle, CardDescription, CardHeader, Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { AppointmentForm } from "@/components/appoinment/AppointmentForm";
 
 export function AllCars() {
+  const [showForm, setShowForm] = useState(false);
+  const [selectedCar, setSelectedCar] = useState<Car | null>(null);
+  
+
   const cars = [
     { id: 1, name: "Toyota Corolla", price: "$209.00", type: "Economy", seats: 5, imageUrl: "/placeholder.svg" },
     { id: 2, name: "Mercedes C-Class", price: "$208.00", type: "Luxury", seats: 5, imageUrl: "/placeholder.svg" },
@@ -11,6 +19,18 @@ export function AllCars() {
     { id: 5, name: "Chevy Camaro", price: "$209.00", type: "Sports", seats: 4, imageUrl: "/placeholder.svg" },
     { id: 6, name: "Toyota Supra", price: "$210.00", type: "Sports", seats: 2, imageUrl: "/placeholder.svg" },
   ];
+  type Car = {
+    id: number;
+    name: string;
+    price: string;
+    type: string;
+    seats: number;
+    imageUrl: string;
+  };
+  const handleInterestedClick = (car: Car) => {
+    setSelectedCar(car);
+    setShowForm(true);
+  };
 
   return (
     <main className="flex-1 p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
@@ -40,12 +60,13 @@ export function AllCars() {
                 Info
               </Button>
             </Link>
-            <Button className="flex-1" variant="outline">
+            <Button className="flex-1" variant="outline" onClick={() => handleInterestedClick(car)}>
               Interested
             </Button>
           </div>
         </Card>
       ))}
+      {showForm && <AppointmentForm onClose={() => setShowForm(false)} />}
     </main>
   );
 }

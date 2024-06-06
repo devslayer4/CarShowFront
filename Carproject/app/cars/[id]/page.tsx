@@ -1,7 +1,8 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { AppointmentForm } from "@/components/appoinment/AppointmentForm";
 import { CardTitle, CardDescription, CardHeader, Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import FuelIcon from "@/components/icons/FuelIcon";
@@ -24,6 +25,7 @@ const CarDetails = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const id = searchParams.get('id');
+  const [showForm, setShowForm] = useState(false);
   const [car, setCar] = useState<Car | null>(null);
 
   useEffect(() => {
@@ -82,11 +84,13 @@ const CarDetails = () => {
           <Button
             className="flex-1 bg-gray-900 text-gray-50 hover:bg-gray-900/90 focus-visible:ring-gray-950 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus-visible:ring-gray-300"
             variant="outline"
+            onClick={() => setShowForm(true)}
           >
             Book Appointment
           </Button>
         </div>
       </Card>
+      {showForm && <AppointmentForm onClose={() => setShowForm(false)} />}
     </main>
   );
 };
