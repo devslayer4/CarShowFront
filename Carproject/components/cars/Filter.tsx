@@ -14,16 +14,30 @@ const LocalCheckbox: React.FC<LocalCheckboxProps> = ({ id, checked, onChange }) 
   <input type="checkbox" id={id} checked={checked} onChange={onChange} />
 );
 
-export function Filter() {
-  const [selectedEngine, setSelectedEngine] = useState("");
-  const [price, setPrice] = useState(12);
+interface FilterProps {
+  onFilter: (filters: any) => void;
+}
+
+export function Filter({ onFilter }: Readonly<FilterProps>) {
+  const [selectedEngine, setSelectedEngine] = useState<string | null>(null);
+  const [selectedType, setSelectedType] = useState("");
+  const [minPrice, setMinPrice] = useState("");
+  const [maxPrice, setMaxPrice] = useState("");
+  const [search, setSearch] = useState("");
 
   const handleEngineChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedEngine(event.target.id);
+    const { id, checked } = event.target;
+    setSelectedEngine(checked ? id : null);
   };
 
-  const handlePriceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPrice(Number(event.target.value));
+  const handleFilterClick = () => {
+    onFilter({
+      engine: selectedEngine,
+      type: selectedType,
+      minPrice: minPrice ? parseFloat(minPrice) : null,
+      maxPrice: maxPrice ? parseFloat(maxPrice) : null,
+      search,
+    });
   };
 
   return (
@@ -34,11 +48,11 @@ export function Filter() {
           {["gas", "diesel", "electric", "hybrid"].map((type) => (
             <div key={type} className="flex items-center space-x-2">
               <LocalCheckbox
-                id={`engine-${type}`}
-                checked={selectedEngine === `engine-${type}`}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) => handleEngineChange(event)}
+                id={type}
+                checked={selectedEngine === type}
+                onChange={handleEngineChange}
               />
-              <label className="text-sm" htmlFor={`engine-${type}`}>
+              <label className="text-sm" htmlFor={type}>
                 {type.charAt(0).toUpperCase() + type.slice(1)}
               </label>
             </div>
@@ -47,7 +61,12 @@ export function Filter() {
       </div>
       <div className="space-y-2">
         <h3 className="text-lg font-semibold">Type</h3>
-        <select className="w-full p-2 border rounded">
+        <select
+          className="w-full p-2 border rounded"
+          value={selectedType}
+          onChange={(e) => setSelectedType(e.target.value)}
+        >
+          <option value="">All</option>
           {["Economy", "Luxury", "Sports", "SUV", "Minivan", "Pickup"].map((type) => (
             <option key={type} value={type.toLowerCase()}>
               {type}
@@ -56,24 +75,56 @@ export function Filter() {
         </select>
       </div>
       <div className="space-y-2">
-        <h3 className="text-lg font-semibold">Price</h3>
+        <h3 className="text-lg font-semibold">Price Range</h3>
         <div className="flex space-x-2 items-center">
-          <span className="text-sm">${price}</span>
-          <input
-            className="w-full"
-            max="164"
-            min="12"
-            type="range"
-            value={price}
-            onChange={handlePriceChange}
-          />
-          <span className="text-sm">$164</span>
+          <select
+            className="w-full p-2 border rounded"
+            value={minPrice}
+            onChange={(e) => setMinPrice(e.target.value)}
+          >
+            <option value="">Min Price</option>
+            {["100", "200", "300", "400", "500"].map((price) => (
+              <option key={price} value={price}>
+                ${price}
+              </option>
+            ))}
+          </select>
+          <select
+            className="w-full p-2 border rounded"
+            value={maxPrice}
+            onChange={(e) => setMaxPrice(e.target.value)}
+          >
+            <option value="">Max Price</option>
+            {["1000", "2000", "3000", "4000", "5000"].map((price) => (
+              <option key={price} value={price}>
+                ${price}
+              </option>
+            ))}
+          </select>
         </div>
       </div>
       <div className="flex gap-2 mt-4">
-        <Input className="flex-1" placeholder="Search model or brand" />
-        <Button className="shrink-0">Filter</Button>
-        <Button className="shrink-0" variant="secondary">
+        <Input
+          className="flex-1"
+          placeholder="Search model or brand"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+        <Button className="shrink-0" onClick={handleFilterClick}>
+          Filter
+        </Button>
+        <Button
+          className="shrink-0"
+          variant="secondary"
+          onClick={() => {
+            setSelectedEngine(null);
+            setSelectedType("");
+            setMinPrice("");
+            setMaxPrice("");
+            setSearch("");
+            onFilter({});
+          }}
+        >
           Reset
         </Button>
       </div>
