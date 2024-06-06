@@ -6,7 +6,6 @@ import { useAuthStore } from "@/components/forms/store/authStore";
 import CarIcon from "@/components/icons/CarIcon";
 import HomeIcon from "@/components/icons/HomeIcon";
 import InfoIcon from "@/components/icons/InfoIcon";
-import MailIcon from "@/components/icons/MailIcon";
 import MenuIcon from "@/components/icons/MenuIcon";
 import ShoppingCartIcon from "@/components/icons/ShoppingCartIcon";
 import UserIcon from "@/components/icons/UserIcon";
@@ -65,10 +64,9 @@ export default function Navbar() {
                 <InfoIcon className="mr-2 h-5 w-5" />
                 À propos
               </Link>
-              <Link href="/contact" className="flex w-full items-center py-2 text-lg font-semibold" prefetch={false}>
-                <MailIcon className="mr-2 h-5 w-5" />
-                Contacts
-              </Link>
+              <Link href="/contact" className="text-gray-500 dark:text-gray-400" prefetch={false}>
+             Contacts
+           </Link>
             </div>
           </SheetContent>
         </Sheet>
