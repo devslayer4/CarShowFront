@@ -1,7 +1,6 @@
 "use client";
 
 import { AppointmentForm } from "@/components/appoinment/AppointmentForm";
-import { Filter } from "@/components/cars/Filter";
 import { Button } from "@/components/ui/button";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import Image from 'next/image';
@@ -18,15 +17,18 @@ export interface Car {
   engine: string;
 }
 
-export function AllCars() {
+interface AllCarsProps {
+  filters: Readonly<any>;
+}
+
+export function AllCars({ filters }: AllCarsProps) {
   const [showForm, setShowForm] = useState(false);
   const [selectedCar, setSelectedCar] = useState<Car | null>(null);
   const [filteredCars, setFilteredCars] = useState<Car[]>([]);
-  const [filters, setFilters] = useState<any>({});
 
   useEffect(() => {
     const fetchCars = async () => {
-      const response = await fetch('/http://localhost:3000/cars/api/car', {
+      const response = await fetch('/api/car', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -52,13 +54,8 @@ export function AllCars() {
     setShowForm(true);
   };
 
-  const handleFilter = (filters: any) => {
-    setFilters(filters);
-  };
-
   return (
     <div className="flex">
-      <Filter onFilter={handleFilter} />
       <main className="flex-1 p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
         {filteredCars.length === 0 ? (
           <p>No cars found</p>
