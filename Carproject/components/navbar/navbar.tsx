@@ -5,7 +5,6 @@ import RegisterForm from "@/components/forms/RegisterForm";
 import { useAuthStore } from "@/components/forms/store/authStore";
 import CarIcon from "@/components/icons/CarIcon";
 import HomeIcon from "@/components/icons/HomeIcon";
-import InfoIcon from "@/components/icons/InfoIcon";
 import MenuIcon from "@/components/icons/MenuIcon";
 import ShoppingCartIcon from "@/components/icons/ShoppingCartIcon";
 import UserIcon from "@/components/icons/UserIcon";
@@ -30,13 +29,10 @@ export default function Navbar() {
       </Link>
       <nav className="hidden ml-auto gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
         <Link href="/" className="font-bold" prefetch={false}>
-          Accueil
+          Home
         </Link>
         <Link href="/cars" className="text-gray-500 dark:text-gray-400" prefetch={false}>
-          Voitures
-        </Link>
-        <Link href="/about" className="text-gray-500 dark:text-gray-400" prefetch={false}>
-          À propos
+          Cars
         </Link>
         <Link href="/contact" className="text-gray-500 dark:text-gray-400" prefetch={false}>
           Contacts
@@ -54,15 +50,11 @@ export default function Navbar() {
             <div className="grid gap-2 py-6">
               <Link href="/" className="flex w-full items-center py-2 text-lg font-semibold" prefetch={false}>
                 <HomeIcon className="mr-2 h-5 w-5" />
-                Accueil
+                Home
               </Link>
               <Link href="/cars" className="flex w-full items-center py-2 text-lg font-semibold" prefetch={false}>
                 <CarIcon className="mr-2 h-5 w-5" />
-                Voitures
-              </Link>
-              <Link href="/about" className="flex w-full items-center py-2 text-lg font-semibold" prefetch={false}>
-                <InfoIcon className="mr-2 h-5 w-5" />
-                À propos
+                Cars
               </Link>
               <Link href="/contact" className="text-gray-500 dark:text-gray-400" prefetch={false}>
                 Contacts
@@ -80,12 +72,12 @@ export default function Navbar() {
             onClick={toggleLoginForm}
           >
             <UserIcon className="h-6 w-6" />
-            <span className="sr-only">Connexion</span>
+            <span className="sr-only">Login</span>
           </Button>
         )}
         <Button variant="ghost" size="icon" className="rounded-full">
           <ShoppingCartIcon className="h-6 w-6" />
-          <span className="sr-only">Panier</span>
+          <span className="sr-only">Cart</span>
         </Button>
         <Link href="/admin">
           <Button variant="outline">Intranet</Button>
