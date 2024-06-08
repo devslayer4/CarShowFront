@@ -65,8 +65,8 @@ export default function Navbar() {
                 À propos
               </Link>
               <Link href="/contact" className="text-gray-500 dark:text-gray-400" prefetch={false}>
-             Contacts
-           </Link>
+                Contacts
+              </Link>
             </div>
           </SheetContent>
         </Sheet>
@@ -87,7 +87,9 @@ export default function Navbar() {
           <ShoppingCartIcon className="h-6 w-6" />
           <span className="sr-only">Panier</span>
         </Button>
-        <Button variant="outline">Intranet</Button>
+        <Link href="/admin">
+          <Button variant="outline">Intranet</Button>
+        </Link>
       </div>
       {showLoginForm && <LoginForm onClose={toggleLoginForm} onSwitchToRegister={toggleRegisterForm} />}
       {showRegisterForm && <RegisterForm onClose={toggleRegisterForm} onSwitchToLogin={toggleLoginForm} />}
