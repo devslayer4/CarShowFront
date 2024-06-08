@@ -1,7 +1,7 @@
 "use client";
 
 import { Admin, Resource } from 'react-admin';
-import dataProvider from '../providers/dataProvider';
+import dataProvider from '../providers/baseProvider'; // Ensure the correct provider is imported
 import { CarCreate, CarEdit, CarList } from './cars';
 import { ImageCreate, ImageEdit, ImageList } from './images';
 import { UserCreate, UserEdit, UserList } from './users';

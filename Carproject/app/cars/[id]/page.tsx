@@ -11,7 +11,8 @@ import PowerIcon from "@/components/icons/PowerIcon";
 import FastForwardIcon from "@/components/icons/FastForwardIcon";
 import Image from 'next/image';
 
-interface Car {
+export interface Car {
+  id: number;
   name: string;
   description: string;
   imageUrl: string;
@@ -19,8 +20,10 @@ interface Car {
   price: string;
   power: string;
   speed: string;
+  type: string;
+  seats: number;
+  engine: string;
 }
-
 const CarDetails = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -90,7 +93,7 @@ const CarDetails = () => {
           </Button>
         </div>
       </Card>
-      {showForm && <AppointmentForm onClose={() => setShowForm(false)} />}
+      {showForm && <AppointmentForm car={car} onClose={() => setShowForm(false)} />}
     </main>
   );
 };
